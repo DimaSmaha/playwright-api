@@ -1,5 +1,8 @@
-import type { PlaywrightTestConfig } from "@playwright/test";
+import { expect, PlaywrightTestConfig } from "@playwright/test";
 import { devices } from "@playwright/test";
+import playwrightApiMatchers from "odottaa";
+
+expect.extend(playwrightApiMatchers);
 
 const config: PlaywrightTestConfig = {
   testDir: "./tests",

@@ -15,6 +15,20 @@ const user = { name: "Dima", job: "QA" };
 const userUpdate = { name: "Geralt", job: "Witcher" };
 const registerUser = { email: "eve.holt@reqres.in", password: "pistol" };
 
+const schema = {
+  $schema: "http://json-schema.org/draft-04/schema#",
+  type: "object",
+  properties: {
+    id: {
+      type: "integer",
+    },
+    token: {
+      type: "string",
+    },
+  },
+  required: ["id", "token"],
+};
+
 test.describe("Reqres API test suite", () => {
   test("Should get the list of users", async ({ request }) => {
     const userRequest = await request.get(`${users}?page=2`);
@@ -59,5 +73,8 @@ test.describe("Reqres API test suite", () => {
     let body = await userRequest.json();
     expect(await body.id).toEqual(4);
     expect(await body.token).toEqual("QpwL5tke4Pnpja7X4");
+
+    expect(userRequest).toHaveStatusCode(200);
+    expect(userRequest).toMatchJSON({ id: 4, token: "QpwL5tke4Pnpja7X4" });
   });
 });
