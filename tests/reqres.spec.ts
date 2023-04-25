@@ -57,7 +57,7 @@ test.describe("Reqres API test suite", () => {
     });
     expect(userRequest.status()).toEqual(200);
     let body = await userRequest.json();
-    expect(await body.name).toEqual(userUpdate.name);
-    expect(await body).toHaveProperty("updatedAt");
+    expect(await body.id).toEqual(4);
+    expect(await body.token).toEqual("QpwL5tke4Pnpja7X4");
   });
 });
