@@ -11,6 +11,8 @@ let user7 = {
   avatar: "https://reqres.in/img/faces/7-image.jpg",
 };
 
+const data = { name: "Dima", job: "QA" };
+
 test.describe("Reqres API test suite", () => {
   test("Should get the list of users", async ({ request }) => {
     const userRequest = await request.get(`${users}?page=2`);
@@ -24,5 +26,13 @@ test.describe("Reqres API test suite", () => {
     expect(await body.page).toEqual(2);
     expect(await body.data[0].id).toEqual(7);
     expect(await body.data[0]).toEqual(user7);
+  });
+
+  test("Create a user", async ({ request }) => {
+    const userRequest = await request.post(`${users}`, { data });
+    expect(userRequest.status()).toEqual(201);
+    let body = await userRequest.json();
+    expect(await body.name).toEqual(data.name);
+    expect(await body.createdAt).toContain("2023");
   });
 });
