@@ -11,7 +11,8 @@ let user7 = {
   avatar: "https://reqres.in/img/faces/7-image.jpg",
 };
 
-const data = { name: "Dima", job: "QA" };
+const user = { name: "Dima", job: "QA" };
+const userUpdate = { name: "Geralt", job: "Witcher" };
 
 test.describe("Reqres API test suite", () => {
   test("Should get the list of users", async ({ request }) => {
@@ -29,10 +30,18 @@ test.describe("Reqres API test suite", () => {
   });
 
   test("Create a user", async ({ request }) => {
-    const userRequest = await request.post(`${users}`, { data });
+    const userRequest = await request.post(`${users}`, { data: user });
     expect(userRequest.status()).toEqual(201);
     let body = await userRequest.json();
-    expect(await body.name).toEqual(data.name);
+    expect(await body.name).toEqual(user.name);
     expect(await body.createdAt).toContain("2023");
+  });
+
+  test("update a user", async ({ request }) => {
+    const userRequest = await request.put(`${users}/2`, { data: userUpdate });
+    expect(userRequest.status()).toEqual(200);
+    let body = await userRequest.json();
+    expect(await body.name).toEqual(userUpdate.name);
+    expect(await body).toHaveProperty("updatedAt");
   });
 });
