@@ -13,6 +13,7 @@ let user7 = {
 
 const user = { name: "Dima", job: "QA" };
 const userUpdate = { name: "Geralt", job: "Witcher" };
+const registerUser = { email: "eve.holt@reqres.in", password: "pistol" };
 
 test.describe("Reqres API test suite", () => {
   test("Should get the list of users", async ({ request }) => {
@@ -39,6 +40,21 @@ test.describe("Reqres API test suite", () => {
 
   test("update a user", async ({ request }) => {
     const userRequest = await request.put(`${users}/2`, { data: userUpdate });
+    expect(userRequest.status()).toEqual(200);
+    let body = await userRequest.json();
+    expect(await body.name).toEqual(userUpdate.name);
+    expect(await body).toHaveProperty("updatedAt");
+  });
+
+  test("delete a user", async ({ request }) => {
+    const userRequest = await request.delete(`${users}/2`);
+    expect(userRequest.status()).toEqual(204);
+  });
+
+  test("register a user", async ({ request }) => {
+    const userRequest = await request.post(`${register}`, {
+      data: registerUser,
+    });
     expect(userRequest.status()).toEqual(200);
     let body = await userRequest.json();
     expect(await body.name).toEqual(userUpdate.name);
