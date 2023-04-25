@@ -1,5 +1,8 @@
 import { test, expect } from "@playwright/test";
 
+const users = "api/users";
+const register = "api/register";
+
 let user7 = {
   id: 7,
   email: "michael.lawson@reqres.in",
@@ -10,7 +13,7 @@ let user7 = {
 
 test.describe("Reqres API test suite", () => {
   test("Should get the list of users", async ({ request }) => {
-    const userRequest = await request.get("/api/users?page=2");
+    const userRequest = await request.get(`${users}?page=2`);
     expect(userRequest.status()).toEqual(200);
     // expect(await userRequest.json()).toContain(expect.objectContaining({
     //   "per_page": 6
