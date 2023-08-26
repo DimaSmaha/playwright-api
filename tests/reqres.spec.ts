@@ -1,4 +1,8 @@
 import { test, expect } from "@playwright/test";
+import * as chai from "chai";
+import { expect as expectChai } from "chai";
+import chaiJsonSchema from "chai-json-schema";
+chai.use(chaiJsonSchema);
 
 const users = "api/users";
 const register = "api/register";
@@ -76,5 +80,6 @@ test.describe("Reqres API test suite", () => {
 
     expect(userRequest).toHaveStatusCode(200);
     expect(userRequest).toMatchJSON({ id: 4, token: "QpwL5tke4Pnpja7X4" });
+    expectChai(body).to.be.jsonSchema(schema);
   });
 });

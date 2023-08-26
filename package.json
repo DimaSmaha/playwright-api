@@ -3,6 +3,8 @@
     "@playwright/test": "1.31.0"
   },
   "dependencies": {
+    "chai": "^4.3.8",
+    "chai-json-schema": "^1.5.1",
     "odottaa": "^1.1.14"
   }
 }
